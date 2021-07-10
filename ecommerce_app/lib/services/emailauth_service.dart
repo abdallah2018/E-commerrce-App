@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/screens/authantication/email_verificatoin_screen.dart';
 import 'package:ecommerce_app/screens/location_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -72,8 +73,12 @@ class EmailAuthanticationService {
            'uid':userCredential.user!.uid,
            'mobile':null,
            'email':userCredential.user!.email,
-         }).then((value){
-           Navigator.pushReplacementNamed(context, LocationScreen.routeName);
+         }).then((value) async {
+           await userCredential.user!.sendEmailVerification()
+               .then((value) {
+             Navigator.pushReplacementNamed(context, EmailVerificationScreen.routeName);
+           });
+           //Navigator.pushReplacementNamed(context, LocationScreen.routeName);
           });
            // .catchError(onError){};
        }

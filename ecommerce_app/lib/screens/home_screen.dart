@@ -10,7 +10,7 @@ class HomeScreen extends StatefulWidget {
   static const String routeName ='home_screen';
   late final LocationData  locationData;
 
-  HomeScreen(this.locationData);
+  HomeScreen({ required this.locationData});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

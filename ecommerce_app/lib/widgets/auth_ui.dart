@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/authantication/email_auth_screen.dart';
+import 'package:ecommerce_app/screens/authantication/email_verificatoin_screen.dart';
 import 'package:ecommerce_app/screens/authantication/google_auth.dart';
 import 'package:ecommerce_app/screens/authantication/phoneauth_screen.dart';
 import 'package:ecommerce_app/services/phoneauth_service.dart';
@@ -40,8 +41,8 @@ class AuthUi extends StatelessWidget {
               onPressed: ()async{
                 User? user = await GoogleAuthantication.signinWithGoogle(context: context);
               if(user != null){
-                PhoneAuthService  _authantication=PhoneAuthService();
-                _authantication.addUser(context, user.uid);
+                PhoneAuthService  _authentication=PhoneAuthService();
+                _authentication.addUser(context, user.uid);
               }
             }
          ),
@@ -53,6 +54,7 @@ class AuthUi extends StatelessWidget {
           InkWell(
             onTap: (){
               Navigator.pushNamed(context, EmailAuthScreen.routeName);
+             // Navigator.pushNamed(context, EmailVerificationScreen.routeName);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
