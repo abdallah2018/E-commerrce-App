@@ -1,7 +1,42 @@
+import 'dart:async';
+import 'location_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
-class SplashScreen extends StatelessWidget {
+import 'login_screen.dart';
+
+class SplashScreen extends StatefulWidget {
+
+  static const String routeName ='splash_screen';
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState(){
+    Timer(
+        Duration(seconds: 3),
+            (){
+          FirebaseAuth.instance
+              .authStateChanges()
+              .listen((User? user) {
+            if(user == null){
+              print('user_isnot-loggedIn');
+              Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+            }else{
+              Navigator.pushReplacementNamed(context, LocationScreen.routeName);
+            }
+          });
+        }
+    );
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 

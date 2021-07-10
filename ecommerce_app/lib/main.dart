@@ -1,6 +1,9 @@
+import 'package:ecommerce_app/screens/authantication/email_auth_screen.dart';
 import 'package:ecommerce_app/screens/authantication/phoneauth_screen.dart';
+import 'package:ecommerce_app/screens/home_screen.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:ecommerce_app/screens/splash_screen.dart';
+import 'screens/location_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -35,10 +38,15 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.cyan.shade900,
               fontFamily: 'Herizon'
             ),
-            home: LoginScreen(),
+            //home: LoginScreen(),
+            initialRoute: SplashScreen.routeName,
             routes: {
+              SplashScreen.routeName:  (context) =>  SplashScreen(),
               LoginScreen.routeName:  (context) =>  LoginScreen(),
               PhoneAuthScreen.routeName:  (context) =>  LoginScreen(),
+              LocationScreen.routeName:  (context) =>  LocationScreen(),
+              HomeScreen.routeName:  (context) =>  LocationScreen(),
+              EmailAuthScreen.routeName:  (context) =>  EmailAuthScreen(),
             },
           );
         }

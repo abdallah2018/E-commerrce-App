@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/services/phoneauth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:legacy_progress_dialog/legacy_progress_dialog.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   static const String routeName ='phone_auth_screen';
@@ -16,29 +18,17 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
     var countryCodeController = TextEditingController(text: '+91');
     var phoneNumberController = TextEditingController();
 
-    showAlertDialog(BuildContext context){
-      AlertDialog alert = AlertDialog(
-        content: Row(
-          children: [
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-            ),
-            SizedBox(width: 8,),
-            Text('please wait'),
-          ],
-        ),
-      );
-      showDialog(
-          barrierDismissible: false,
-          context: context,builder: (BuildContext context ){
-        return alert;
-      });
+    PhoneAuthService  _service  = PhoneAuthService();
 
-    }
+    //Create an instance of ProgressDialog
+    ProgressDialog progressDialog = ProgressDialog(
+      context: context,
+      backgroundColor: Colors.white,
+      textColor: Colors.black,
+      loadingText: 'Please wait',
+      progressIndicatorColor: Theme.of(context).primaryColor,
+    );
 
-    phoneAuthantication(number){
-      print(number);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -141,8 +131,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
               onPressed: () {
                 String number = '${countryCodeController.text}${phoneNumberController.text}';
-                showAlertDialog(context);
-                phoneAuthantication(number);
+                //showAlertDialog(context);
+                progressDialog.show();
+                _service.verifyPhoneNumber(context, number);
+
               },
               child: Padding(
                 padding: const EdgeInsets.all(12.0),

@@ -1,4 +1,8 @@
+import 'package:ecommerce_app/screens/authantication/email_auth_screen.dart';
+import 'package:ecommerce_app/screens/authantication/google_auth.dart';
 import 'package:ecommerce_app/screens/authantication/phoneauth_screen.dart';
+import 'package:ecommerce_app/services/phoneauth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -13,8 +17,11 @@ class AuthUi extends StatelessWidget {
           SizedBox(
             width: 220,
             child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white)
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(3.0),
+                ),
               ),
                 onPressed: (){
                 Navigator.pushNamed(context, PhoneAuthScreen.routeName);
@@ -30,21 +37,38 @@ class AuthUi extends StatelessWidget {
           SignInButton(
               Buttons.Google,
               text: ('Continue with Google'),
-              onPressed: (){}
-              ),
+              onPressed: ()async{
+                User? user = await GoogleAuthantication.signinWithGoogle(context: context);
+              if(user != null){
+                PhoneAuthService  _authantication=PhoneAuthService();
+                _authantication.addUser(context, user.uid);
+              }
+            }
+         ),
           SignInButton(
               Buttons.Facebook,
               text: ('Continue with Facebook'),
               onPressed: (){}
               ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Login with Email',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  decoration:TextDecoration.underline ),),
+          InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, EmailAuthScreen.routeName);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.white))
+                ),
+                child: Text(
+                  'Login with Email',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
