@@ -1,4 +1,7 @@
+import 'location_screen.dart';
 import 'package:ecommerce_app/widgets/auth_ui.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
@@ -6,6 +9,7 @@ class LoginScreen extends StatelessWidget {
   static const String routeName ='login_screen';
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.cyan.shade900,
       body:Column(
